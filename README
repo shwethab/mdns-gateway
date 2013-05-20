@@ -1,8 +1,8 @@
 Authors' workflow, once you have setup git locally and pulled the mdns-gateway project:
 1. checkout the draft-*.xml - git checkout draft-*.xml
 2. Edit using XMLEditor app
-3. make (setup path to include current dir)
-4. Check draft-*.txt to check if it is built
+3. execute "make" (setup path to include current dir)
+4. Check generated draft-*.txt to check if it is built
 5. make clean to delete .txt
 6. Diffs can be viewed using : git diff <filename>
 7. checkin draft-*.xml
