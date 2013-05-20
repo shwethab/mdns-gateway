@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="US-ASCII"?>
-<!DOCTYPE rfc SYSTEM "rfc2629.dtd">
+<!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
+<!-- One method to get references from the online citation libraries.
+ There has to be one entity for each item to be referenced.
+ An alternate method (rfc include) is described in the references. -->
+<!ENTITY RFC2119 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
+<!ENTITY RFC6762 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6762.xml">
+<!ENTITY RFC6763 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6763.xml">
+<!ENTITY I-D.cheshire-mdnsext-hybrid SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.cheshire-mdnsext-hybrid.xml">
+<!ENTITY I-D.lynn-homenet-site-mdns SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.lynn-homenet-site-mdns.xml">
+]>
 <?rfc toc="yes"?>
 <?rfc tocompact="yes"?>
 <?rfc tocdepth="3"?>
@@ -13,7 +22,8 @@
 <rfc category="info" docName="draft-bhandari-mdns-gateway-00"
      ipr="trust200902">
   <front>
-    <title abbrev="Abbreviated-Title">mDNS gateway implementation</title>
+    <title abbrev="mDNS across local links">Extending multicast DNS across
+    local links</title>
 
     <author fullname="Shwetha Bhandari" initials="S." surname="Bhandari">
       <organization abbrev="Cisco">Cisco Systems, Inc.</organization>
@@ -119,18 +129,18 @@
   <middle>
     <section title="Introduction">
       <t>Service discovery using multicast DNS (mDNS) as defined in <xref
-      target="RFC6672"></xref> is limited in scope to layer 3 boundaries due
+      target="RFC6762"></xref> is limited in scope to layer 3 boundaries due
       to the use of link-local scoped multicast addresses. &lt;Due to
       partitioning of network into multiple virtual local area networks and
       subnets for various reasons there is a need to extend services using
-      mDNS beyond L3 boundaries... TBD elaborate&gt; </t>
+      mDNS beyond L3 boundaries... TBD elaborate&gt;</t>
 
       <t>Enabling Service Discovery across L3 boundaries can be accomplished
-      in two ways: </t>
+      in two ways:</t>
 
       <t><list style="symbols">
           <t>Defining mDNS gateway entity at the L3 boundary that will extend
-          services </t>
+          services</t>
 
           <t>Modifying mDNS to use a wider scope multicast address</t>
         </list></t>
@@ -165,10 +175,10 @@
             networks</t>
 
             <t>Services that resolve to IPv4 and IPv6 Link Local addresses
-            only must not be extended beyond local link. </t>
+            only must not be extended beyond local link.</t>
 
             <t>Regardless of the topology, duplicate requests and responses
-            must be avoided </t>
+            must be avoided</t>
 
             <t>A mechanism for automatically handling duplicate host names.
             Extended names and service offerings must follow mDNS
@@ -186,22 +196,23 @@
       <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
       "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
       document are to be interpreted as described in "Key words for use in
-      RFCs to Indicate Requirement Levels" [RFC2119]. </t>
+      RFCs to Indicate Requirement Levels" [RFC2119].</t>
 
       <t>This document uses the multicast DNS and DNS terminology and
-      conventions from [RFC6762] and [RFC6763]. It uses the same convention
-      for services on the same link as defined in
-      [ID-cheshire-mdnsext-hybrid], repeated here for quick reference:</t>
+      conventions from <xref target="RFC6762"></xref> and <xref
+      target="RFC6763"></xref>. It uses the same convention for services on
+      the same link as defined in [ID-cheshire-mdnsext-hybrid], repeated here
+      for quick reference:</t>
 
       <t>Multicast Multicast DNS works between a hosts on the same link. A set
-      of hosts is considered to be "on the same link", if: </t>
+      of hosts is considered to be "on the same link", if:</t>
 
-      <t> when any host A from that set sends a packet to any other host B in
+      <t>when any host A from that set sends a packet to any other host B in
       that set, using unicast, multicast, or broadcast, the entire link-layer
-      packet payload arrives unmodified, and </t>
+      packet payload arrives unmodified, and</t>
 
       <t>a broadcast sent over that link by any host from that set of hosts
-      can be received by every other host in that set </t>
+      can be received by every other host in that set</t>
 
       <t>The link-layer *header* may be modified, such as in Token Ring Source
       Routing [802.5], but not the link-layer *payload*. In particular, if any
@@ -305,7 +316,11 @@
 
   <back>
     <references title="Normative References">
-      <?rfc include="reference.RFC.2119"?>
+      &RFC2119;
+
+      &RFC6762;
+
+      &RFC6763;
     </references>
   </back>
 </rfc>
