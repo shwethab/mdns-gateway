@@ -115,7 +115,7 @@
     <abstract>
       <t>This document describes the solution and design of application that
       extends multicast DNS services across links as realized in Cisco network
-      router, switch, wirless LAN controller products.</t>
+      router, switch, wireless LAN controller products.</t>
     </abstract>
 
     <note title="Requirements Language">
