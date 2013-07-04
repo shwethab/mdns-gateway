@@ -7,6 +7,7 @@
 <!ENTITY RFC6762 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6762.xml">
 <!ENTITY RFC6763 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6763.xml">
 <!ENTITY I-D.cheshire-mdnsext-hybrid SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.cheshire-mdnsext-hybrid.xml">
+<!ENTITY I-D.stenberg-homenet-dnssdext-hybrid-proxy-ospf SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.stenberg-homenet-dnssdext-hybrid-proxy-ospf.xml">
 <!ENTITY I-D.lynn-homenet-site-mdns SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.lynn-homenet-site-mdns.xml">
 ]>
 <?rfc toc="yes"?>
@@ -276,7 +277,7 @@
           across links based on configuration</t>
 
           <t>Active query - Service queries sent by the mDNS gateway on one or
-          more of the links it is attached to to learn services </t>
+          more of the links it is attached to to learn services</t>
         </list></t>
 
       <t><figure>
@@ -314,7 +315,7 @@
         response/advertiment messages based on matching:</t>
 
         <t><list style="symbols">
-            <t>Service type </t>
+            <t>Service type</t>
 
             <t>Service instance names</t>
 
@@ -322,7 +323,7 @@
 
             <t>Type of message - query or advertisement</t>
 
-            <t>Location of the host query or advertising a service</t>
+            <t>Location of the host querying or advertising a service</t>
           </list>Service filtering policy is applied for the incoming messages
         or outgoing messages. There can be different filtering policies
         applied on different links.</t>
@@ -396,16 +397,16 @@
         <section title="Advertising service on wireless network">
           <t>In order to conserved wireless bandwidth due to limitation of
           multicast implemenation in 802.11, mDNS gateway sends service
-          advertisements to wireless devices as L2 unicast messages. </t>
+          advertisements to wireless devices as L2 unicast messages.</t>
 
-          <t> In a wireless network, the mDNS gateway co-located on the
-          network element that bridges the link local multicast packetscan act
-          as passive device and respond only if wireless clients sends a mDNS
+          <t>In a wireless network, the mDNS gateway co-located on the network
+          element that bridges the link local multicast packetscan act as
+          passive device and respond only if wireless clients sends a mDNS
           query. Bridging of link local mDNS messages can be turned off basd
           on configuration. This is useful in the following scenario:</t>
 
           <t><list style="numbers">
-              <t> Save computation resources on the device which are used to
+              <t>Save computation resources on the device which are used to
               replicate the multicast packet as layer 2 unicast for all
               wireless clients.</t>
 
@@ -476,27 +477,51 @@
     </section>
 
     <section title="Challenges">
-      <t></t>
+      <t>This section lists out limitations and challenges faced as part of
+      the realizing the solution described in this draft.</t>
 
-      <section title="Name conflicts across links">
-        <t></t>
-      </section>
+      <t><list style="numbers">
+          <t>Name conflict resolution across links: Name conflict resolution
+          depends on the probing following by registration by the host that is
+          providing a service. Name conflict resolution across links depends
+          on the mDNS gateway cache to have exhaustive list of names always
+          hence able to respond to probe requests. However this may not always
+          be posible due to timing issues when the cache get updated, records
+          having expired from the cache etc</t>
 
-      <section title="Multiple mDNS gateways on the link">
-        <t></t>
-      </section>
+          <t>Multihomed hosts: There is also the case of a multihomed host
+          connected via multiple links to the same mDNS gateway that may end
+          up wrongly assuming conflict and getting into a continuous renaming
+          loop.</t>
+
+          <t>Multiple mDNS gateways on the link: If there are multiple mDNS
+          gateways enabled on the same link queries may get duplicate
+          responses.</t>
+
+          <t>Loops in the network: If there i a loop in the network and
+          multiple mDNS gateways are enabled in such a loop it may end up
+          continuosly recycling the service around the loop and keeping the
+          RRs alive forever.</t>
+
+          <t>Refreshing resource records: Balancing excessive number of
+          queries to maintain the records in the cache Vs having the cache up
+          to date with all the known record names leads to optimizations that
+          may lead to corner cases where wrong result or conflicts arise.</t>
+        </list></t>
     </section>
 
     <section title="Future work">
-      <t></t>
+      <t>The solution documented here is limited to extending services in a
+      across links attached to a single network element. For a wider area
+      service discovery solution described in <xref
+      target="I-D.cheshire-mdnsext-hybrid"></xref> should be realized with any
+      provisioning as needed.</t>
 
-      <section title="Extending services across multiple mDNS gateways">
-        <t></t>
-      </section>
-
-      <section title="Location information for filtering">
-        <t></t>
-      </section>
+      <t>Similar to auto provisioning and realization of the hybrid proxy
+      approach for homenet as described in <xref
+      target="I-D.stenberg-homenet-dnssdext-hybrid-proxy-ospf"></xref> a
+      solution needs to be built for enterprise and campus networks extending
+      the what i described in this draft.</t>
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
@@ -507,7 +532,7 @@
     </section>
 
     <section anchor="Security" title="Security Considerations">
-      <t></t>
+      <t>N/A</t>
     </section>
 
     <section anchor="Acknowledgements" title="Acknowledgements">
@@ -524,6 +549,8 @@
       &RFC6763;
 
       &I-D.cheshire-mdnsext-hybrid;
+
+      &I-D.stenberg-homenet-dnssdext-hybrid-proxy-ospf;
     </references>
   </back>
 </rfc>
