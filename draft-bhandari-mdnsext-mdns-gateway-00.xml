@@ -76,13 +76,13 @@
         <postal>
           <street>City Plaza - 4th Floor</street>
 
-          <city>STUTTGART, BADEN-WURTTEMBERG</city>
+          <city>Stuttgart </city>
 
-          <region></region>
+          <region>BADEN-WURTTEMBERG</region>
 
           <code>70178</code>
 
-          <country>GERMANY</country>
+          <country>Germany</country>
         </postal>
 
         <email>rschmied@cisco.com</email>
@@ -96,7 +96,7 @@
         <postal>
           <street>1 Paragon Drive</street>
 
-          <street></street>
+          <street/>
 
           <city>Montvale</city>
 
@@ -132,13 +132,13 @@
       </address>
     </author>
 
-    <date day="15" month="June" year="2013" />
+    <date day="15" month="June" year="2013"/>
 
     <abstract>
       <t>This document describes the requirements for extending multicast DNS
-      in enterprise network. It provides with an overview of solution to
-      extend multicast DNS services across links as realized in Cisco network
-      router, switch, wireless LAN controller systems.</t>
+      in enterprise networks. It provides an overview of a solution to extend
+      multicast DNS services across links that has been implemented in Cisco
+      routers, switches and wireless LAN controllers.</t>
     </abstract>
 
     <note title="Requirements Language">
@@ -151,69 +151,68 @@
 
   <middle>
     <section title="Introduction">
-      <t>Service discovery using multicast DNS (mDNS) as defined in
-      <xref target="RFC6762"></xref> is limited in scope to L3
-      boundaries due to the use of link-local scoped multicast
-      addresses. Networks are partitioned into multiple segments by
-      means of virtual local area networks (VLANs) or subnet creation
-      for various reasons. The need for network wide, seamless service
-      discovery demands the extension of the discovery protocol beyond
-      the L3 boundary. There are also challenges in Wi-Fi
-      networks when a large number of multicast messages are exchanged
-      due to existing 802.11 multicast implementations. </t>
+      <t>Service discovery using multicast DNS (mDNS) as defined in <xref
+      target="RFC6762"/> is limited in scope to L3 boundaries due to the use
+      of link-local scoped multicast addresses. Networks are partitioned into
+      multiple segments by means of virtual local area networks (VLANs) or
+      subnet creation for various reasons. The need for network wide, seamless
+      service discovery demands the extension of the discovery protocol beyond
+      the L3 boundary. There are also challenges in Wi-Fi networks when a
+      large number of multicast messages are exchanged due to existing 802.11
+      multicast implementations.</t>
 
       <t>Enabling Service Discovery across L3 boundaries can be accomplished
       in one of the following ways using existing, unmodified protocols:</t>
 
       <t><list style="numbers">
-          <t>Unicast DNS-SD only: Use of DNS servers and allowing the
-          client to use dynamic DNS updates and Long Lived Queries
-          (LLQs) to announce and learn services dynamically 
-          <xref target="I-D.sekar-dns-llq"></xref></t>
+          <t>Unicast DNS-SD only: Use of DNS servers and allowing the client
+          to use dynamic DNS updates and Long Lived Queries (LLQs) to announce
+          and learn services dynamically <xref
+          target="I-D.sekar-dns-llq"/></t>
 
           <t>mDNS only: Defining a mDNS gateway entity at the L3 boundary that
           will extend services across the links it is attached to</t>
 
           <t>Combination of unicast DNS and mDNS - Hybrid proxy approach as
-          described in <xref target="I-D.cheshire-mdnsext-hybrid"></xref></t>
+          described in <xref target="I-D.cheshire-mdnsext-hybrid"/></t>
 
           <t>mDNS with extended scope multicast - Modifying mDNS to use a
           wider scope multicast address for message exchange</t>
         </list></t>
 
-      <t>As a first step, this draft lists out the approach to use a
-      mDNS gateway on a network element (approach 2) to extend the
-      services across all the network segments attached to the element.
-      While this approach does not preclude (1) or (3), it allows the
-      extension of service discovery in a limited number of segments
-      with minimal provisioning. Approach (4) is not explored further
-      as it would add to the flood of service discovery messages in the
-      scope defined by the multicast address and it would also require
-      changes on mDNS clients, which is undesirable.</t>
+      <t>As a first step, this draft lists out the approach to use a mDNS
+      gateway on a network element (2) to extend the services across all the
+      network segments attached to the element. While this approach does not
+      preclude (1) or (3), it allows the extension of service discovery in a
+      limited number of segments with minimal provisioning. Approach (4) is
+      not explored further as it would add to the flood of service discovery
+      messages in the scope defined by the multicast address and it would also
+      require changes on mDNS clients, which is undesirable.</t>
 
       <section title="Requirements">
         <t>This section describes requirements for extending multicast DNS in
         an enterprise environment:<list style="numbers">
             <t>Extend service discovery across L3 boundaries</t>
 
-            <t>Defining and enforcing a policy to selectively filter services to
-            be extended based on service type and service instance names</t>
+            <t>Defining and enforcing a policy to selectively filter services
+            to be extended based on service type and service instance
+            names</t>
 
-            <t>Defining and enforcing a policy to selectively filter queries and
-            announcements from specific clients or over specific network
+            <t>Defining and enforcing a policy to selectively filter queries
+            and announcements from specific clients or over specific network
             links</t>
 
             <t>Filtering of link-local-only information - Services that
-            resolve to IPv4 and IPv6 link-local addresses only must not
-            be extended beyond the local link. Suppression of resource
-            records that contain link-local-only addresses from
-            propagation beyond the local link</t>
+            resolve to IPv4 and IPv6 link-local addresses only must not be
+            extended beyond the local link. Suppression of resource records
+            that contain link-local-only addresses from propagation beyond the
+            local link</t>
 
             <t>Optimize mDNS packets in wireless networks</t>
 
-            <t>Effectively handle roaming of mobile devices (changes in
-            the Point of Attachment). Especially if those devices
-            advertise services</t>
+            <t>Effectively handle roaming of mobile devices (changes in the
+            Point of Attachment). Especially if those devices advertise
+            services</t>
 
             <t>Limit the services in response to queries with a subset of the
             services that are in geographic proximity</t>
@@ -221,8 +220,8 @@
             <t>Handle conflict resolution of service instances and host names
             across the links where the service is extended</t>
 
-            <t>Protection of resources (memory and CPU) of the network
-            element that participates in extending multicast DNS</t>
+            <t>Protection of resources (memory and CPU) of the network element
+            that participates in extending multicast DNS</t>
           </list></t>
       </section>
     </section>
@@ -234,11 +233,10 @@
       RFCs to Indicate Requirement Levels" [RFC2119].</t>
 
       <t>This document uses the multicast DNS and DNS terminology and
-      conventions from <xref target="RFC6762"></xref> and <xref
-      target="RFC6763"></xref>. It uses the same convention for services
-      on the same link as defined in <xref
-      target="I-D.cheshire-mdnsext-hybrid"></xref>, repeated here for
-      quick reference:</t>
+      conventions from <xref target="RFC6762"/> and <xref target="RFC6763"/>.
+      It uses the same convention for services on the same link as defined in
+      <xref target="I-D.cheshire-mdnsext-hybrid"/>, repeated here for quick
+      reference:</t>
 
       <t>Multicast Multicast DNS works between a hosts on the same link. A set
       of hosts is considered to be "on the same link", if:</t>
@@ -265,35 +263,32 @@
     </section>
 
     <section title="Solution overview">
-      <t>The solution introduces a mDNS gateway function which is
-      co-located on the network element that connects to multiple links,
-      typically an IP router. The mDNS gateway function will be
-      responsible for:</t>
+      <t>The solution introduces a mDNS gateway function which is co-located
+      on the network element that connects to multiple links, typically an IP
+      router. The mDNS gateway function will be responsible for:</t>
 
       <t><list style="symbols">
-          <t>Caching - Learn and cache services. Maintain services in
-          the cache according to service announcements, service removals
-          and the TTL of the records.</t>
+          <t>Caching - Learn and cache services. Maintain services in the
+          cache according to service announcements, service removals and the
+          TTL of the records.</t>
 
           <t>Respond to queries - Advertise in response to queries with
           services in the cache that are not in the same link-local domain
           where the query is received.</t>
 
-          <t>Service filtering - Filter services to be added to the
-          cache and to be included in the advertisements as per
-          configured policies.</t>
+          <t>Service filtering - Filter services to be added to the cache and
+          to be included in the advertisements as per configured policies.</t>
 
           <t>Service redistribution - forwarding of unsolicited service
           announcements across links based on configuration</t>
 
-          <t>Active query - Service queries sent by the mDNS gateway
-          itself to learn about services or keep services 'fresh' in the
-          cache. Can be sent on one or more of the links the gateway is
-          attached to.</t>
+          <t>Active query - Service queries sent by the mDNS gateway itself to
+          learn about services or keep services 'fresh' in the cache. Can be
+          sent on one or more of the links the gateway is attached to.</t>
         </list></t>
 
       <t><figure>
-          <artwork><![CDATA[   
+          <artwork>   
                 +------+-----+                 
                 |    mDNS    |                    
                 |  gateway   |                       
@@ -310,24 +305,24 @@
          '----+----'           '----+----'
 
 
-]]></artwork>
+</artwork>
         </figure></t>
 
       <section title="Service Cache">
-        <t>The mDNS gateway maintains a database of DNS Resource Records
-        (RR) required to advertise and resolve services. At a minimum,
-        the cache will contain PTR, SRV,TXT and A/AAAA RRs for each
-        service. In addition, the link on which the service and host are
-        seen is also remembered. This is required to refresh the records
-        on TTL expiry.</t>
+        <t>The mDNS gateway maintains a database of DNS Resource Records (RR)
+        required to advertise and resolve services. At a minimum, the cache
+        will contain PTR, SRV,TXT and A/AAAA RRs for each service. In
+        addition, the link on which the service and host are seen is also
+        remembered. This is required to refresh the records on TTL expiry.</t>
       </section>
 
       <section title="Service Filters">
         <t>A service filtering policy is configured to permit or deny services
-        into the cache or to filter services included in the
-        response / advertisement messages based on matching:</t>
+        into the cache or to filter services included in the response /
+        advertisement messages based on matching:</t>
 
-        <t><list style="symbols"> <t>Service type</t>
+        <t><list style="symbols">
+            <t>Service type</t>
 
             <t>Service instance names</t>
 
@@ -335,28 +330,27 @@
 
             <t>Type of message - query or advertisement</t>
 
-            <t>Location of the host querying or advertising a
-            service</t> </list>A Service filtering policy is applied for
-            incoming and / or outgoing messages. Different filtering
-            policies can be on different links.</t>
+            <t>Location of the host querying or advertising a service</t>
+          </list>A Service filtering policy is applied for incoming and / or
+        outgoing messages. Different filtering policies can be on different
+        links.</t>
 
-        <t>When a mDNS message is received by the mDNS gateway that
-        matches the action set for the link, policy matching is
-        executed. The incoming advertisement is processed against the
-        mDNS gateway filtering policy applied in the incoming direction
-        on the link where the advertisement is received. If the action
-        is 'permit' the service is added to the cache. For a response or
-        advertisement to be sent out, a filtering policy applied in the
-        outgoing direction is processed and if the resulting action is
-        'deny' then the service and its corresponding RRs are not
-        included in the message sent out.</t>
+        <t>When a mDNS message is received by the mDNS gateway that matches
+        the action set for the link, policy matching is executed. The incoming
+        advertisement is processed against the mDNS gateway filtering policy
+        applied in the incoming direction on the link where the advertisement
+        is received. If the action is 'permit' the service is added to the
+        cache. For a response or advertisement to be sent out, a filtering
+        policy applied in the outgoing direction is processed and if the
+        resulting action is 'deny' then the service and its corresponding RRs
+        are not included in the message sent out.</t>
       </section>
 
       <section title="Service Announcement">
-        <t>The mDNS gateway listens for all service announcements. When
-        a service announcement is received, the announcement and all the
-        additional RRs learnt are added to the cache or ignored based on
-        the result of the configured filter policy.</t>
+        <t>The mDNS gateway listens for all service announcements. When a
+        service announcement is received, the announcement and all the
+        additional RRs learnt are added to the cache or ignored based on the
+        result of the configured filter policy.</t>
 
         <t>The RRs containing link-local information (e.g. A or AAAA RRs) that
         contain link-local scoped addresses are not stored in the cache.</t>
@@ -366,15 +360,14 @@
       </section>
 
       <section title="Service Query">
-        <t>The mDNS gateway processes all the queries against the
-        configured filtering policy. If the response to the query is
-        permitted then it constructs the answers and additional records
-        required to resolve the service from its cache for the services
-        that are permitted. Services that reside on the same link where
-        the query is received are not included as the owner of the
-        service will also see the query and would send the response
-        directly. Only services learnt from different links are
-        considered in the response.</t>
+        <t>The mDNS gateway processes all the queries against the configured
+        filtering policy. If the response to the query is permitted then it
+        constructs the answers and additional records required to resolve the
+        service from its cache for the services that are permitted. Services
+        that reside on the same link where the query is received are not
+        included as the owner of the service will also see the query and would
+        send the response directly. Only services learnt from different links
+        are considered in the response.</t>
 
         <t>Any query received for additional RRs to resolve the service e.g.
         query for SRV, A, AAAA etc are also responded in the same way. If the
@@ -384,117 +377,110 @@
       </section>
 
       <section title="Service update, Service withdrawal">
-        <t>When the mDNS gateway receives a service update or withdrawal it updates
-        or removes the service and all corresponding records from its cache.
-        It forwards the withdraw messages to other attached links.</t>
+        <t>When the mDNS gateway receives a service update or withdrawal it
+        updates or removes the service and all corresponding records from its
+        cache. It forwards the withdraw messages to other attached links.</t>
       </section>
 
       <section title="Service Refresh">
-        <t>The RRs describing the service and resolving it have a TTL
-        that defines the validity of the RR. The mDNS gateway can
-        continuously refresh each of the RRs in the cache as per the TTL
-        rules. For the purpose of optimization, the mDNS gateway can
-        rely on the host interested in the RRs to trigger a refresh by
-        setting the TTLs in the response to the time remaining since the
-        record was learnt by the mDNS gateway. If a client is interested
-        in the RR then it would trigger a refresh when a fraction of the
-        TTL is reached. While responding to queries from hosts, the mDNS
-        gateway inturn sends out queries to refresh the records that are
-        about to expire on the link where the records were learnt.</t>
+        <t>The RRs describing the service and resolving it have a TTL that
+        defines the validity of the RR. The mDNS gateway can continuously
+        refresh each of the RRs in the cache as per the TTL rules. For the
+        purpose of optimization, the mDNS gateway can rely on the host
+        interested in the RRs to trigger a refresh by setting the TTLs in the
+        response to the time remaining since the record was learnt by the mDNS
+        gateway. If a client is interested in the RR then it would trigger a
+        refresh when a fraction of the TTL is reached. While responding to
+        queries from hosts, the mDNS gateway inturn sends out queries to
+        refresh the records that are about to expire on the link where the
+        records were learnt.</t>
       </section>
 
       <section title="mDNS Gateway for Wireless Network">
         <t>Deploying the mDNS gateway in wireless networks has a few
-        additional requirements w.r.t to multicast radio optimization
-        and mobility aspects. This section describes some additional
-        capabilities added to the mDNS gateway to satisfy these
-        requirements.</t>
+        additional requirements w.r.t to multicast radio optimization and
+        mobility aspects. This section describes some additional capabilities
+        added to the mDNS gateway to satisfy these requirements.</t>
 
         <section title="Advertising services on wireless networks">
-          <t>In order to conserve wireless bandwidth due to limitations
-          of the multicast implementation in 802.11, the mDNS gateway
-          sends service advertisements to wireless devices as L2 unicast
-          messages.</t>
+          <t>In order to conserve wireless bandwidth due to limitations of the
+          multicast implementation in 802.11, the mDNS gateway sends service
+          advertisements to wireless devices as L2 unicast messages.</t>
 
-          <t>In a wireless network, the mDNS gateway co-located on the
-          network element that bridges the link-local multicast packets
-          can act as a passive device and respond only if wireless
-          clients sends a mDNS query. Bridging of link-local mDNS
-          messages can be turned off based on configuration. This is
-          useful in the following scenario:</t>
+          <t>In a wireless network, the mDNS gateway co-located on the network
+          element that bridges the link-local multicast packets can act as a
+          passive device and respond only if wireless clients sends a mDNS
+          query. Bridging of link-local mDNS messages can be turned off based
+          on configuration. This is useful in the following scenario:</t>
 
           <t><list style="numbers">
               <t>Save computation resources on the device which are used to
-              replicate the multicast packet as a L2 unicast for all
-              wireless clients.</t>
+              replicate the multicast packet as a L2 unicast for all wireless
+              clients.</t>
 
-              <t>If the wireless client is in power saving mode, sending
-              a mDNS advertisement as a L2 unicast would forcefully
-              awake the client and it would result into more power
-              consumption by the wireless client.</t>
+              <t>If the wireless client is in power saving mode, sending a
+              mDNS advertisement as a L2 unicast would forcefully awake the
+              client and it would result into more power consumption by the
+              wireless client.</t>
             </list></t>
 
-          <t>mDNS functionality is not impacted by acting as a passive
-          gateway because the client would always send the mDNS query
-          when inquiring for a service.</t>
+          <t>mDNS functionality is not impacted by acting as a passive gateway
+          because the client would always send the mDNS query when inquiring
+          for a service.</t>
         </section>
 
         <section title="Device Tracking">
-          <t>Wireless clients are mobile in nature. The mDNS gateway
-          should learn the service instance only from the authenticated
-          wireless client. The mDNS gateway should tag each service
-          instance from a wireless client with the client's MAC address.
-          This MAC address should be used for device tracking. If the
-          wireless client leaves the network, the mDNS gateway should
-          not wait until the TTL expires but it should actively clean up
-          the service instance provided by that wireless client. This is
-          done to protect the mDNS gateway cache resources.</t>
+          <t>Wireless clients are mobile in nature. The mDNS gateway should
+          learn the service instance only from the authenticated wireless
+          client. The mDNS gateway should tag each service instance from a
+          wireless client with the client's MAC address. This MAC address
+          should be used for device tracking. If the wireless client leaves
+          the network, the mDNS gateway should not wait until the TTL expires
+          but it should actively clean up the service instance provided by
+          that wireless client. This is done to protect the mDNS gateway cache
+          resources.</t>
         </section>
 
         <section title="Mobility Considerations">
           <t>Wireless deployments supports seamless mobility. In such a
-          scenario, the mDNS gateway needs to be aware of the client
-          location. If the location changes, the mDNS gateway needs to
-          update its mDNS cache. The mDNS gateway should tag each
-          service instance with the device location. The device location
-          can be derived based on the Access Point (AP) to which the
-          wireless client is attached. If the client, which is providing
-          any service, changes its location, this change needs to be
-          reflected in the mDNS gateway. If the client roams from one
-          mDNS gateway to another mDNS gateway, then the old gateway
-          should provide the service instance information pertaining to
-          the roamed client to the new gateway and then it must clear
-          the mDNS cache for that particular client. If the mDNS gateway
-          is not acting as a passive gateway, it may choose to update
-          the network about the new service instance it has learnt.</t>
+          scenario, the mDNS gateway needs to be aware of the client location.
+          If the location changes, the mDNS gateway needs to update its mDNS
+          cache. The mDNS gateway should tag each service instance with the
+          device location. The device location can be derived based on the
+          Access Point (AP) to which the wireless client is attached. If the
+          client, which is providing any service, changes its location, this
+          change needs to be reflected in the mDNS gateway. If the client
+          roams from one mDNS gateway to another mDNS gateway, then the old
+          gateway should provide the service instance information pertaining
+          to the roamed client to the new gateway and then it must clear the
+          mDNS cache for that particular client. If the mDNS gateway is not
+          acting as a passive gateway, it may choose to update the network
+          about the new service instance it has learnt.</t>
         </section>
 
         <section title="mDNS traffic optimization">
-          <t>All mDNS packets are sent to the multicast link-local IP
-          address. When the mDNS gateway starts forwarding the mDNS
-          advertisements across L3 boundaries then the number of such
-          advertisement on any network would increase. 802.11 wireless
-          networks operate in half duplex mode so any packet on air
-          would need to contend for the wireless medium to transmit the
-          packet. If there are many mDNS packets going on air then it
-          would impact other data traffic. Hence mDNS traffic
-          optimization is required.</t>
+          <t>All mDNS packets are sent to the multicast link-local IP address.
+          When the mDNS gateway starts forwarding the mDNS advertisements
+          across L3 boundaries then the number of such advertisement on any
+          network would increase. 802.11 wireless networks operate in half
+          duplex mode so any packet on air would need to contend for the
+          wireless medium to transmit the packet. If there are many mDNS
+          packets going on air then it would impact other data traffic. Hence
+          mDNS traffic optimization is required.</t>
 
-          <t>When services are advertised, each record has an associated
-          TTL value. When the TTL expires, the gateway needs to send a
-          query (at 85%, 90% and 95% of the TTL) for that record to
-          confirm its validity. If the TTL value of each record is
-          different, then mDNS gateway needs to send a query for
-          individual records. To minimize the mDNS traffic, queries for
-          multiple RRs for that service record set can be initiated
-          towards the source of the service. Such a query can be sent
-          with the QU bit set as described in <xref
-          target="RFC6762"></xref> to solicit a unicast response.</t>
+          <t>When services are advertised, each record has an associated TTL
+          value. When the TTL expires, the gateway needs to send a query (at
+          85%, 90% and 95% of the TTL) for that record to confirm its
+          validity. If the TTL value of each record is different, then mDNS
+          gateway needs to send a query for individual records. To minimize
+          the mDNS traffic, queries for multiple RRs for that service record
+          set can be initiated towards the source of the service. Such a query
+          can be sent with the QU bit set as described in <xref
+          target="RFC6762"/> to solicit a unicast response.</t>
 
-          <t>The mDNS gateway for wireless networks should act as a
-          passive gateway as explained in [section:Advertising services
-          on wireless network]. This would also save some of the
-          wireless bandwidth.</t>
+          <t>The mDNS gateway for wireless networks should act as a passive
+          gateway as explained in [section:Advertising services on wireless
+          network]. This would also save some of the wireless bandwidth.</t>
         </section>
       </section>
     </section>
@@ -504,15 +490,14 @@
       the the solution described in this draft.</t>
 
       <t><list style="numbers">
-          <t>Name conflict resolution across links: Name conflict
-          resolution depends on probing followed by service
-          registration. This is done by the host which is providing the
-          service. Name conflict resolution across links depends on the
-          mDNS gateway cache to have a conclusive list of names already
-          present to be able to authoritatively respond to probe
-          requests. However, this may not always be posible due to
-          timing issues when the cache gets updated, records having
-          expired from the cache etc.</t>
+          <t>Name conflict resolution across links: Name conflict resolution
+          depends on probing followed by service registration. This is done by
+          the host which is providing the service. Name conflict resolution
+          across links depends on the mDNS gateway cache to have a conclusive
+          list of names already present to be able to authoritatively respond
+          to probe requests. However, this may not always be posible due to
+          timing issues when the cache gets updated, records having expired
+          from the cache etc.</t>
 
           <t>Multi-homed hosts: There is also the case of a multihomed host
           connected via multiple links to the same mDNS gateway that may end
@@ -524,30 +509,30 @@
           responses.</t>
 
           <t>Loops in the network: If there is a loop in the network and
-          multiple mDNS gateways are enabled in such a topology it may
-          end up continuously cycling the service around the loop and
-          keeping the RRs alive forever.</t>
+          multiple mDNS gateways are enabled in such a topology it may end up
+          continuously cycling the service around the loop and keeping the RRs
+          alive forever.</t>
 
-          <t>Refreshing resource records: Balancing an excessive number
-          of queries to maintain the records in the cache vs. having the
-          cache up-to-date with all the known record names requires
-          optimizations that may lead to corner cases where wrong
-          results or conflicts arise.</t>
+          <t>Refreshing resource records: Balancing an excessive number of
+          queries to maintain the records in the cache vs. having the cache
+          up-to-date with all the known record names requires optimizations
+          that may lead to corner cases where wrong results or conflicts
+          arise.</t>
         </list></t>
     </section>
 
     <section title="Future work">
       <t>The solution documented here is limited to extending services in a
-      across links attached to a single network element. For a broader application, the
-      service discovery solution described in <xref
-      target="I-D.cheshire-mdnsext-hybrid"></xref> should be realized with any
+      across links attached to a single network element. For a broader
+      application, the service discovery solution described in <xref
+      target="I-D.cheshire-mdnsext-hybrid"/> should be realized with any
       provisioning as needed.</t>
 
       <t>Similar to auto provisioning and realization of the hybrid proxy
       approach for homenet as described in <xref
-      target="I-D.stenberg-homenet-dnssdext-hybrid-proxy-ospf"></xref> a
-      solution needs to be built for enterprise and campus networks extending
-      the what has been described in this draft.</t>
+      target="I-D.stenberg-homenet-dnssdext-hybrid-proxy-ospf"/> a solution
+      needs to be built for enterprise and campus networks extending the what
+      has been described in this draft.</t>
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
@@ -562,7 +547,7 @@
     </section>
 
     <section anchor="Acknowledgements" title="Acknowledgements">
-      <t></t>
+      <t/>
     </section>
   </middle>
 
@@ -577,9 +562,8 @@
       &I-D.cheshire-mdnsext-hybrid;
 
       &I-D.stenberg-homenet-dnssdext-hybrid-proxy-ospf;
-      
+
       &I-D.sekar-dns-llq;
-      
     </references>
   </back>
 </rfc>
