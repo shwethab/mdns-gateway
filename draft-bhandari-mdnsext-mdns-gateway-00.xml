@@ -4,6 +4,7 @@
  There has to be one entity for each item to be referenced.
  An alternate method (rfc include) is described in the references. -->
 <!ENTITY RFC2119 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml">
+<!ENTITY RFC1035 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.1035.xml">
 <!ENTITY RFC6762 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6762.xml">
 <!ENTITY RFC6763 SYSTEM "http://xml.resource.org/public/rfc/bibxml/reference.RFC.6763.xml">
 <!ENTITY I-D.cheshire-mdnsext-hybrid SYSTEM "http://xml.resource.org/public/rfc/bibxml3/reference.I-D.cheshire-mdnsext-hybrid.xml">
@@ -76,7 +77,7 @@
         <postal>
           <street>City Plaza - 4th Floor</street>
 
-          <city>Stuttgart </city>
+          <city>Stuttgart</city>
 
           <region>BADEN-WURTTEMBERG</region>
 
@@ -96,7 +97,7 @@
         <postal>
           <street>1 Paragon Drive</street>
 
-          <street/>
+          <street></street>
 
           <city>Montvale</city>
 
@@ -132,7 +133,7 @@
       </address>
     </author>
 
-    <date day="15" month="June" year="2013"/>
+    <date day="15" month="June" year="2013" />
 
     <abstract>
       <t>This document describes the requirements for extending multicast DNS
@@ -152,14 +153,14 @@
   <middle>
     <section title="Introduction">
       <t>Service discovery using multicast DNS (mDNS) as defined in <xref
-      target="RFC6762"/> is limited in scope to L3 boundaries due to the use
-      of link-local scoped multicast addresses. Networks are partitioned into
-      multiple segments by means of virtual local area networks (VLANs) or
-      subnet creation for various reasons. The need for network wide, seamless
-      service discovery demands the extension of the discovery protocol beyond
-      the L3 boundary. There are also challenges in Wi-Fi networks when a
-      large number of multicast messages are exchanged due to existing 802.11
-      multicast implementations.</t>
+      target="RFC6762"></xref> is limited in scope to L3 boundaries due to the
+      use of link-local scoped multicast addresses. Networks are partitioned
+      into multiple segments by means of virtual local area networks (VLANs)
+      or subnet creation for various reasons. The need for network wide,
+      seamless service discovery demands the extension of the discovery
+      protocol beyond the L3 boundary. There are also challenges in Wi-Fi
+      networks when a large number of multicast messages are exchanged due to
+      existing 802.11 multicast implementations.</t>
 
       <t>Enabling Service Discovery across L3 boundaries can be accomplished
       in one of the following ways using existing, unmodified protocols:</t>
@@ -168,13 +169,13 @@
           <t>Unicast DNS-SD only: Use of DNS servers and allowing the client
           to use dynamic DNS updates and Long Lived Queries (LLQs) to announce
           and learn services dynamically <xref
-          target="I-D.sekar-dns-llq"/></t>
+          target="I-D.sekar-dns-llq"></xref></t>
 
           <t>mDNS only: Defining a mDNS gateway entity at the L3 boundary that
           will extend services across the links it is attached to</t>
 
           <t>Combination of unicast DNS and mDNS - Hybrid proxy approach as
-          described in <xref target="I-D.cheshire-mdnsext-hybrid"/></t>
+          described in <xref target="I-D.cheshire-mdnsext-hybrid"></xref></t>
 
           <t>mDNS with extended scope multicast - Modifying mDNS to use a
           wider scope multicast address for message exchange</t>
@@ -233,9 +234,10 @@
       RFCs to Indicate Requirement Levels" [RFC2119].</t>
 
       <t>This document uses the multicast DNS and DNS terminology and
-      conventions from <xref target="RFC6762"/> and <xref target="RFC6763"/>.
-      It uses the same convention for services on the same link as defined in
-      <xref target="I-D.cheshire-mdnsext-hybrid"/>, repeated here for quick
+      conventions from <xref target="RFC6762"></xref> and <xref
+      target="RFC6763"></xref>. It uses the same convention for services on
+      the same link as defined in <xref
+      target="I-D.cheshire-mdnsext-hybrid"></xref>, repeated here for quick
       reference:</t>
 
       <t>Multicast Multicast DNS works between a hosts on the same link. A set
@@ -287,27 +289,6 @@
           sent on one or more of the links the gateway is attached to.</t>
         </list></t>
 
-      <t><figure>
-          <artwork>   
-                +------+-----+                 
-                |    mDNS    |                    
-                |  gateway   |                       
-                +---+----+---+  
-                    |... |
-              link1 |    | linkn  
-                    |    |
-               _____|    |__________
-              |                     |
-         _----+----_           _----+----_
-       _(           )_       _(           )_
-      ( Hosts on Link1) ... ( Hosts on Linkn)
-       (_           _)       (_           _)
-         '----+----'           '----+----'
-
-
-</artwork>
-        </figure></t>
-
       <section title="Service Cache">
         <t>The mDNS gateway maintains a database of DNS Resource Records (RR)
         required to advertise and resolve services. At a minimum, the cache
@@ -317,9 +298,10 @@
       </section>
 
       <section title="Service Filters">
-        <t>A service filtering policy is configured to permit or deny services
-        into the cache or to filter services included in the response /
-        advertisement messages based on matching:</t>
+        <t>A service filtering policy is configured with an action to permit
+        or deny services into the cache or to filter services included in the
+        response / advertisement messages based on matching criteria. The
+        matching criteria can be defined based on:</t>
 
         <t><list style="symbols">
             <t>Service type</t>
@@ -331,9 +313,9 @@
             <t>Type of message - query or advertisement</t>
 
             <t>Location of the host querying or advertising a service</t>
-          </list>A Service filtering policy is applied for incoming and / or
-        outgoing messages. Different filtering policies can be on different
-        links.</t>
+          </list>A Service filtering policy is applied for incoming and
+        outgoing messages. Each link can be applied with a unique filtering
+        policy.</t>
 
         <t>When a mDNS message is received by the mDNS gateway that matches
         the action set for the link, policy matching is executed. The incoming
@@ -352,7 +334,7 @@
         additional RRs learnt are added to the cache or ignored based on the
         result of the configured filter policy.</t>
 
-        <t>The RRs containing link-local information (e.g. A or AAAA RRs) that
+        <t>The RRs containing link-local information e.g. A or AAAA RRs that
         contain link-local scoped addresses are not stored in the cache.</t>
 
         <t>When the mDNS gateway learns a service it can also forward the
@@ -370,10 +352,19 @@
         are considered in the response.</t>
 
         <t>Any query received for additional RRs to resolve the service e.g.
-        query for SRV, A, AAAA etc are also responded in the same way. If the
+        query for SRV, A, AAAA etc are responded to in the same way. If the
         records do not exist in the cache due to expiry or purging of cache
         for any other reason, mDNS gateway sends out an explicit query to
         fetch the records on the link where the service resides.</t>
+      </section>
+
+      <section title="Service Probing">
+        <t>According to <xref target="RFC6762"></xref> before registering a RR
+        probing is performed to ensure unique names. As the mDNS gateway
+        maitains cache of all the RRs that are extended across the links it
+        responds to probe records like any other query. This will help in
+        detecting and resolving conflicts across links for names that are
+        extended across links.</t>
       </section>
 
       <section title="Service update, Service withdrawal">
@@ -393,7 +384,7 @@
         refresh when a fraction of the TTL is reached. While responding to
         queries from hosts, the mDNS gateway inturn sends out queries to
         refresh the records that are about to expire on the link where the
-        records were learnt.</t>
+        records were learnt. </t>
       </section>
 
       <section title="mDNS Gateway for Wireless Network">
@@ -476,7 +467,7 @@
           the mDNS traffic, queries for multiple RRs for that service record
           set can be initiated towards the source of the service. Such a query
           can be sent with the QU bit set as described in <xref
-          target="RFC6762"/> to solicit a unicast response.</t>
+          target="RFC6762"></xref> to solicit a unicast response.</t>
 
           <t>The mDNS gateway for wireless networks should act as a passive
           gateway as explained in [section:Advertising services on wireless
@@ -508,8 +499,8 @@
           gateways enabled on the same link queries may get duplicate
           responses.</t>
 
-          <t>Loops in the network: If there is a loop in the network and
-          multiple mDNS gateways are enabled in such a topology it may end up
+          <t>Loops in the network: If there is a loop in the network with
+          multiple mDNS gateways enabled in such a topology it may end up
           continuously cycling the service around the loop and keeping the RRs
           alive forever.</t>
 
@@ -523,16 +514,20 @@
 
     <section title="Future work">
       <t>The solution documented here is limited to extending services in a
-      across links attached to a single network element. For a broader
-      application, the service discovery solution described in <xref
-      target="I-D.cheshire-mdnsext-hybrid"/> should be realized with any
+      across links attached to a single network element or mDNS gateways. For
+      a broader application, the service discovery solution described in <xref
+      target="I-D.cheshire-mdnsext-hybrid"></xref> should be realized with any
       provisioning as needed.</t>
 
       <t>Similar to auto provisioning and realization of the hybrid proxy
       approach for homenet as described in <xref
-      target="I-D.stenberg-homenet-dnssdext-hybrid-proxy-ospf"/> a solution
-      needs to be built for enterprise and campus networks extending the what
-      has been described in this draft.</t>
+      target="I-D.stenberg-homenet-dnssdext-hybrid-proxy-ospf"></xref> a
+      solution needs to be built for enterprise and campus networks extending
+      what has been described in this draft.</t>
+
+      <t>There are other considerations such as including the location
+      information so that services can be ordered based on proximity of the
+      service.</t>
     </section>
 
     <section anchor="IANA" title="IANA Considerations">
@@ -547,13 +542,15 @@
     </section>
 
     <section anchor="Acknowledgements" title="Acknowledgements">
-      <t/>
+      <t></t>
     </section>
   </middle>
 
   <back>
     <references title="Normative References">
       &RFC2119;
+
+      &RFC1035;
 
       &RFC6762;
 
