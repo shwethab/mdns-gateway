@@ -196,8 +196,9 @@
             <t>Extend service discovery across L3 boundaries</t>
 
             <t>Defining and enforcing a policy to selectively filter services
-            to be extended based on service type and service instance
-            names</t>
+            to be extended based on service type, service instance, location
+            of the provider/user, role of the device or user
+            accessing/offering the service.</t>
 
             <t>Defining and enforcing a policy to selectively filter queries
             and announcements from specific clients or over specific network
@@ -223,6 +224,8 @@
 
             <t>Protection of resources (memory and CPU) of the network element
             that participates in extending multicast DNS</t>
+
+            <t>Audit, logging of services that are denied based on policy</t>
           </list></t>
       </section>
     </section>
@@ -361,7 +364,7 @@
       <section title="Service Probing">
         <t>According to <xref target="RFC6762"></xref> before registering a RR
         probing is performed to ensure unique names. As the mDNS gateway
-        maitains cache of all the RRs that are extended across the links it
+        maintains cache of all the RRs that are extended across the links it
         responds to probe records like any other query. This will help in
         detecting and resolving conflicts across links for names that are
         extended across links.</t>
@@ -384,7 +387,7 @@
         refresh when a fraction of the TTL is reached. While responding to
         queries from hosts, the mDNS gateway inturn sends out queries to
         refresh the records that are about to expire on the link where the
-        records were learnt. </t>
+        records were learnt.</t>
       </section>
 
       <section title="mDNS Gateway for Wireless Network">
