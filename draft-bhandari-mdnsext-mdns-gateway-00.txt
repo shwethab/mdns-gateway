@@ -82,22 +82,22 @@ Table of Contents
      3.1.  Service Cache  . . . . . . . . . . . . . . . . . . . . . .  5
      3.2.  Service Filters  . . . . . . . . . . . . . . . . . . . . .  6
      3.3.  Service Announcement . . . . . . . . . . . . . . . . . . .  6
-     3.4.  Service Query  . . . . . . . . . . . . . . . . . . . . . .  6
+     3.4.  Service Query  . . . . . . . . . . . . . . . . . . . . . .  7
      3.5.  Service Probing  . . . . . . . . . . . . . . . . . . . . .  7
      3.6.  Service update, Service withdrawal . . . . . . . . . . . .  7
      3.7.  Service Refresh  . . . . . . . . . . . . . . . . . . . . .  7
-     3.8.  mDNS Gateway for Wireless Network  . . . . . . . . . . . .  7
+     3.8.  mDNS Gateway for Wireless Network  . . . . . . . . . . . .  8
        3.8.1.  Advertising services on wireless networks  . . . . . .  8
        3.8.2.  Device Tracking  . . . . . . . . . . . . . . . . . . .  8
-       3.8.3.  Mobility Considerations  . . . . . . . . . . . . . . .  8
+       3.8.3.  Mobility Considerations  . . . . . . . . . . . . . . .  9
        3.8.4.  mDNS traffic optimization  . . . . . . . . . . . . . .  9
    4.  Challenges . . . . . . . . . . . . . . . . . . . . . . . . . .  9
    5.  Future work  . . . . . . . . . . . . . . . . . . . . . . . . . 10
-   6.  IANA Considerations  . . . . . . . . . . . . . . . . . . . . . 10
-   7.  Security Considerations  . . . . . . . . . . . . . . . . . . . 10
+   6.  IANA Considerations  . . . . . . . . . . . . . . . . . . . . . 11
+   7.  Security Considerations  . . . . . . . . . . . . . . . . . . . 11
    8.  Acknowledgements . . . . . . . . . . . . . . . . . . . . . . . 11
    9.  Normative References . . . . . . . . . . . . . . . . . . . . . 11
-   Authors' Addresses . . . . . . . . . . . . . . . . . . . . . . . . 11
+   Authors' Addresses . . . . . . . . . . . . . . . . . . . . . . . . 12
 
 
 
@@ -270,9 +270,9 @@ Internet-Draft           mDNS across local links               June 2013
 
    The mDNS gateway maintains a database of DNS Resource Records (RR)
    required to advertise and resolve services.  At a minimum, the cache
-   will contain PTR, SRV,TXT and A/AAAA RRs for each service.  In
-   addition, the link on which the service and host are seen is also
-   remembered.  This is required to refresh the records on TTL expiry.
+   will contain PTR, SRV,TXT and A/AAAA RRs for each service with NSEC
+   RR support for optimization.  In addition, the link on which the
+   service and host are seen is also remembered.  This is required to
 
 
 
@@ -280,6 +280,8 @@ Bhandari, et al.        Expires December 17, 2013               [Page 5]
 
 Internet-Draft           mDNS across local links               June 2013
 
+
+   refresh the records on TTL expiry.
 
 3.2.  Service Filters
 
@@ -324,11 +326,9 @@ Internet-Draft           mDNS across local links               June 2013
    When the mDNS gateway learns a service it can also forward the
    advertisement on other attached links.
 
-3.4.  Service Query
 
-   The mDNS gateway processes all the queries against the configured
-   filtering policy.  If the response to the query is permitted then it
-   constructs the answers and additional records required to resolve the
+
+
 
 
 
@@ -337,6 +337,11 @@ Bhandari, et al.        Expires December 17, 2013               [Page 6]
 Internet-Draft           mDNS across local links               June 2013
 
 
+3.4.  Service Query
+
+   The mDNS gateway processes all the queries against the configured
+   filtering policy.  If the response to the query is permitted then it
+   constructs the answers and additional records required to resolve the
    service from its cache for the services that are permitted.  Services
    that reside on the same link where the query is received are not
    included as the owner of the service will also see the query and
@@ -378,12 +383,7 @@ Internet-Draft           mDNS across local links               June 2013
    queries to refresh the records that are about to expire on the link
    where the records were learnt.
 
-3.8.  mDNS Gateway for Wireless Network
 
-   Deploying the mDNS gateway in wireless networks has a few additional
-   requirements w.r.t to multicast radio optimization and mobility
-   aspects.  This section describes some additional capabilities added
-   to the mDNS gateway to satisfy these requirements.
 
 
 
@@ -392,6 +392,13 @@ Bhandari, et al.        Expires December 17, 2013               [Page 7]
 
 Internet-Draft           mDNS across local links               June 2013
 
+
+3.8.  mDNS Gateway for Wireless Network
+
+   Deploying the mDNS gateway in wireless networks has a few additional
+   requirements w.r.t to multicast radio optimization and mobility
+   aspects.  This section describes some additional capabilities added
+   to the mDNS gateway to satisfy these requirements.
 
 3.8.1.  Advertising services on wireless networks
 
@@ -402,8 +409,10 @@ Internet-Draft           mDNS across local links               June 2013
    In a wireless network, the mDNS gateway co-located on the network
    element that bridges the link-local multicast packets can act as a
    passive device and respond only if wireless clients sends a mDNS
-   query.  Bridging of link-local mDNS messages can be turned off based
-   on configuration.  This is useful in the following scenario:
+   query.  When bridging is turned off sending layer 2 unicast message
+   is needed to on even when the provider is on the same link as the
+   requestor.  Bridging of link-local mDNS messages can be turned off
+   based on configuration.  This is useful in the following scenario:
 
    1.  Save computation resources on the device which are used to
        replicate the multicast packet as a L2 unicast for all wireless
@@ -429,6 +438,17 @@ Internet-Draft           mDNS across local links               June 2013
    actively clean up the service instance provided by that wireless
    client.  This is done to protect the mDNS gateway cache resources.
 
+
+
+
+
+
+
+Bhandari, et al.        Expires December 17, 2013               [Page 8]
+
+Internet-Draft           mDNS across local links               June 2013
+
+
 3.8.3.  Mobility Considerations
 
    Wireless deployments supports seamless mobility.  In such a scenario,
@@ -441,14 +461,6 @@ Internet-Draft           mDNS across local links               June 2013
    needs to be reflected in the mDNS gateway.  If the client roams from
    one mDNS gateway to another mDNS gateway, then the old gateway should
    provide the service instance information pertaining to the roamed
-
-
-
-Bhandari, et al.        Expires December 17, 2013               [Page 8]
-
-Internet-Draft           mDNS across local links               June 2013
-
-
    client to the new gateway and then it must clear the mDNS cache for
    that particular client.  If the mDNS gateway is not acting as a
    passive gateway, it may choose to update the network about the new
@@ -476,13 +488,23 @@ Internet-Draft           mDNS across local links               June 2013
    unicast response.
 
    The mDNS gateway for wireless networks should act as a passive
-   gateway as explained in [section:Advertising services on wireless
-   network].  This would also save some of the wireless bandwidth.
+   gateway as explained in Section 3.8.1.  When it is acting as a
+   passive gateway and bridging of mDNS packets is turned off it has to
+   respond to queries on the link even when the provider of the service
+   resides on the same link.
 
 
 4.  Challenges
 
    This section lists out limitations and challenges faced as part of
+
+
+
+Bhandari, et al.        Expires December 17, 2013               [Page 9]
+
+Internet-Draft           mDNS across local links               June 2013
+
+
    the the solution described in this draft.
 
    1.  Name conflict resolution across links: Name conflict resolution
@@ -497,14 +519,6 @@ Internet-Draft           mDNS across local links               June 2013
    2.  Multi-homed hosts: There is also the case of a multihomed host
        connected via multiple links to the same mDNS gateway that may
        end up wrongly assuming conflict and getting into a continuous
-
-
-
-Bhandari, et al.        Expires December 17, 2013               [Page 9]
-
-Internet-Draft           mDNS across local links               June 2013
-
-
        renaming loop.
 
    3.  Multiple mDNS gateways on the link: If there are multiple mDNS
@@ -539,6 +553,14 @@ Internet-Draft           mDNS across local links               June 2013
 
    There are other considerations such as including the location
    information so that services can be ordered based on proximity of the
+
+
+
+Bhandari, et al.        Expires December 17, 2013              [Page 10]
+
+Internet-Draft           mDNS across local links               June 2013
+
+
    service.
 
 
@@ -553,12 +575,6 @@ Internet-Draft           mDNS across local links               June 2013
 7.  Security Considerations
 
    N/A
-
-
-
-Bhandari, et al.        Expires December 17, 2013              [Page 10]
-
-Internet-Draft           mDNS across local links               June 2013
 
 
 8.  Acknowledgements
@@ -594,6 +610,13 @@ Internet-Draft           mDNS across local links               June 2013
               Discovery", RFC 6763, February 2013.
 
 
+
+
+Bhandari, et al.        Expires December 17, 2013              [Page 11]
+
+Internet-Draft           mDNS across local links               June 2013
+
+
 Authors' Addresses
 
    Shwetha Bhandari
@@ -603,18 +626,6 @@ Authors' Addresses
    India
 
    Email: shwethab@cisco.com
-
-
-
-
-
-
-
-
-
-Bhandari, et al.        Expires December 17, 2013              [Page 11]
-
-Internet-Draft           mDNS across local links               June 2013
 
 
    Bhavik Fajalia
@@ -651,17 +662,6 @@ Internet-Draft           mDNS across local links               June 2013
    India
 
    Email: amdutta@cisco.com
-
-
-
-
-
-
-
-
-
-
-
 
 
 

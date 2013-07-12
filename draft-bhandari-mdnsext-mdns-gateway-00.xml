@@ -295,9 +295,10 @@
       <section title="Service Cache">
         <t>The mDNS gateway maintains a database of DNS Resource Records (RR)
         required to advertise and resolve services. At a minimum, the cache
-        will contain PTR, SRV,TXT and A/AAAA RRs for each service. In
-        addition, the link on which the service and host are seen is also
-        remembered. This is required to refresh the records on TTL expiry.</t>
+        will contain PTR, SRV,TXT and A/AAAA RRs for each service with NSEC RR
+        support for optimization. In addition, the link on which the service
+        and host are seen is also remembered. This is required to refresh the
+        records on TTL expiry.</t>
       </section>
 
       <section title="Service Filters">
@@ -396,7 +397,8 @@
         mobility aspects. This section describes some additional capabilities
         added to the mDNS gateway to satisfy these requirements.</t>
 
-        <section title="Advertising services on wireless networks">
+        <section anchor="advertising_wireless"
+                 title="Advertising services on wireless networks">
           <t>In order to conserve wireless bandwidth due to limitations of the
           multicast implementation in 802.11, the mDNS gateway sends service
           advertisements to wireless devices as L2 unicast messages.</t>
@@ -404,8 +406,11 @@
           <t>In a wireless network, the mDNS gateway co-located on the network
           element that bridges the link-local multicast packets can act as a
           passive device and respond only if wireless clients sends a mDNS
-          query. Bridging of link-local mDNS messages can be turned off based
-          on configuration. This is useful in the following scenario:</t>
+          query. When bridging is turned off sending layer 2 unicast message
+          is needed to on even when the provider is on the same link as the
+          requestor. Bridging of link-local mDNS messages can be turned off
+          based on configuration. This is useful in the following
+          scenario:</t>
 
           <t><list style="numbers">
               <t>Save computation resources on the device which are used to
@@ -473,8 +478,10 @@
           target="RFC6762"></xref> to solicit a unicast response.</t>
 
           <t>The mDNS gateway for wireless networks should act as a passive
-          gateway as explained in [section:Advertising services on wireless
-          network]. This would also save some of the wireless bandwidth.</t>
+          gateway as explained in <xref target="advertising_wireless"></xref>.
+          When it is acting as a passive gateway and bridging of mDNS packets
+          is turned off it has to respond to queries on the link even when the
+          provider of the service resides on the same link.</t>
         </section>
       </section>
     </section>
